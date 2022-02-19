@@ -74,20 +74,43 @@ function filterByType(pokemon, type) {
  *  //> [];
  */
 function getPokemonNamesMostEffectiveAgainstType(pokemon, weaknesses, type) {
-  let weaknessesArray;
-  //console.log(type, "+++++++++++++++++++++");
-  for (let category of weaknesses) {
-    console.log(weaknesses[category]);
-    for (let i = 0; i < weaknesses[category].length; i++) {
-      console.log(weaknesses[category][i]);
-      if (weaknesses[category][i] === type) {
-        for (let j = 0; j < pokemon.length; j++) {}
+  let weaknessesArray = [];
+
+  if (weaknesses.hasOwnProperty(type)) {
+    let specifiedEnemyType = weaknesses[type];
+
+    for (let i = 0; i < specifiedEnemyType.length; i++) {
+      for (let j = 0; j < pokemon.length; j++) {
+        if (
+          pokemon[j].type.includes(specifiedEnemyType[i]) &&
+          !weaknessesArray.includes(pokemon[j].name)
+        ) {
+          weaknessesArray.push(pokemon[j].name);
+        }
       }
     }
+  } else {
+    return `No Pokemon found of type: '${type}'.`;
   }
+  console.log(weaknessesArray);
+  return weaknessesArray;
 }
 
 module.exports = {
   filterByType,
   getPokemonNamesMostEffectiveAgainstType,
 };
+
+// console.log(weaknesses[category]);
+// for (let i = 0; i < weaknesses[category].length; i++) {
+//   console.log(weaknesses[category][i]);
+//   if (weaknesses[category][i] === type) {
+//     for (let j = 0; j < pokemon.length; j++) {
+//       if (pokemon.type === weaknesses[category][i]) {
+//         weaknessesArray.push(pokemon.name);
+//       }
+//     }
+//   }
+// }
+// }
+// return weaknessesArray;
