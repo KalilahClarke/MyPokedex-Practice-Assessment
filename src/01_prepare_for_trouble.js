@@ -2,6 +2,7 @@
   Do not change the line below. If you'd like to run code from this file, you may use the `examplePokemon` variable below to gain access to an array of Pokemon.
   Keep in mind that your functions must still have and use a parameter for accepting all Pokemon.
 */
+const pokemon = require("../data/poke");
 const examplePokemon = require("../data/poke");
 // Do not change the line above.
 
@@ -37,7 +38,16 @@ const examplePokemon = require("../data/poke");
   'Dratini',    'Dragonair',  'Dragonite',  'Mewtwo'
 ];
  */
-function getAllPokemonNames() {};
+function getAllPokemonNames(pokemon) {
+  if (!pokemon.length) {
+    return [];
+  }
+  let pokenames = [];
+  for (let i = 0; i < pokemon.length; i++) {
+    pokenames.push(pokemon[i].name);
+  }
+  return pokenames;
+}
 
 /**
  * getHighestAttackStatScore()
@@ -50,7 +60,19 @@ function getAllPokemonNames() {};
  *  getHighestAttackStatScore(pokemon);
  *  //> 134
  */
-function getHighestAttackStatScore() {};
+function getHighestAttackStatScore(pokemon) {
+  if (!pokemon.length) {
+    return 0;
+  }
+  let attack = pokemon[0].stats[2].value;
+  // console.log(attack, "+++++++++++++++++++++++++++++++++");
+  for (let i = 0; i < pokemon.length; i++) {
+    if (pokemon[i].stats[2].value > attack) {
+      attack = pokemon[i].stats[2].value;
+    }
+  }
+  return attack;
+}
 
 /**
  * getAverageTotalStatScore()
@@ -63,11 +85,19 @@ function getHighestAttackStatScore() {};
  *  getAverageTotalStatScore(pokemon);
  *  //> 407.22
  */
-function getAverageTotalStatScore() {}
-
+function getAverageTotalStatScore(pokemon) {
+  if (!pokemon.length) {
+    return 0;
+  }
+  let total = 0;
+  for (let i = 0; i < pokemon.length; i++) {
+    total += pokemon[i].stats[0].value;
+  }
+  return total / pokemon.length;
+}
 
 module.exports = {
-    getAllPokemonNames,
-    getHighestAttackStatScore,
-    getAverageTotalStatScore
+  getAllPokemonNames,
+  getHighestAttackStatScore,
+  getAverageTotalStatScore,
 };
